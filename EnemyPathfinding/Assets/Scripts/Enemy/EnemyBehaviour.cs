@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour, IDamageable
 {
     public int HP = 100;
-    public float attackRange = 2;
+    public float attackRange = 5;
     public GameObject target;
     public bool InVisionRange = false, InAttackRange = false, runAway = false;
     public Pathfinding pathfinding;

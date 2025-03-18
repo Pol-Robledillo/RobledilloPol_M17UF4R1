@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,7 +27,7 @@ public class Pathfinding : MonoBehaviour
         while (true)
         {
             agent.SetDestination(currentPoint.transform.position);
-            while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+            if (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             {
                 yield return null;
             }
