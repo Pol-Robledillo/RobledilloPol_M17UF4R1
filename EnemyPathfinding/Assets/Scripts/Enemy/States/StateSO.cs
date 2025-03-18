@@ -6,8 +6,8 @@ public abstract class StateSO : ScriptableObject
 {
     public ConditionSO StartCondition;
     public List<ConditionSO> EndConditions;
-    public abstract void OnStateEnter(EnemyController ec);
-    public abstract void OnStateUpdate(EnemyController ec);
-    public abstract void OnStateExit(EnemyController ec);
+    public abstract void OnStateEnter(EnemyBehaviour enemy);
+    public abstract void OnStateUpdate(EnemyBehaviour enemy);
+    public abstract void OnStateExit(EnemyBehaviour enemy);
 
 }

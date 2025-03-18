@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(fileName = "ChaseState", menuName = "StatesSO/Chase")]
+[CreateAssetMenu(fileName = "DieState", menuName = "StatesSO/Die")]
 
-public class ChaseState : StateSO
+public class DieState : StateSO
 {
     public override void OnStateEnter(EnemyBehaviour enemy)
     {
+        enemy.gameObject.SetActive(false);
     }
     public override void OnStateUpdate(EnemyBehaviour enemy)
     {
-        enemy.pathfinding.Chase();
     }
     public override void OnStateExit(EnemyBehaviour enemy)
     {

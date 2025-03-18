@@ -3,19 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour, IDamageable
 {
-    public int HP;
+    public int HP = 100;
+    public float attackRange = 2;
     public GameObject target;
-    public int DamagedHP;
-    public bool InVisionRange = false, InAttackRange = false;
-    private Pathfinding pathfinding;
+    public bool InVisionRange = false, InAttackRange = false, runAway = false;
+    public Pathfinding pathfinding;
     private EnemyVision enemyVision;
     public StateSO currentNode;
     public List<StateSO> Nodes;
 
     void Start()
     {
+        target = GameObject.FindGameObjectWithTag("Player");
         pathfinding = GetComponent<Pathfinding>();
         enemyVision = GetComponent<EnemyVision>();
     }
@@ -39,6 +40,7 @@ public class EnemyController : MonoBehaviour
             {
                 target = other.gameObject;
                 InVisionRange = true;
+                InAttackRange = Vector3.Distance(transform.position, target.transform.position) < attackRange;
                 CheckEndingConditions();
             }
             else
@@ -56,24 +58,22 @@ public class EnemyController : MonoBehaviour
             CheckEndingConditions();
         }
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        InAttackRange = true;
-        CheckEndingConditions();
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        InAttackRange = false;
-        CheckEndingConditions();
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            HP--;
-            CheckEndingConditions();
+            TakeDamage(25);
         }
         currentNode.OnStateUpdate(this);
+    }
+    public void TakeDamage(int damage)
+    {
+        HP -= damage;
+        if (HP < 50)
+        {
+            runAway = true;
+        }
+        CheckEndingConditions();
     }
     public void CheckEndingConditions()
     {
